@@ -1625,63 +1625,95 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api; else 
 
 </script>
 <script>
-/* 예시 데이터: 가상의 재외한국학교 초등 설정 (교사 이름은 모두 가상의 이름) */
+/* 예시 데이터: 가상의 재외한국학교 초등 설정 (교사 이름은 모두 가상의 이름)
+   사이트에서 직접 만든 예시를 바탕으로 함 (2026-11-23). 점검·생성 모두 오류 0, 주의 0이 되도록 맞춘 상태.
+   바꿀 때는 화면에서 고친 뒤 [현재 설정을 엑셀로 저장] 파일로 다시 만드는 것을 권장. */
 (function (root) {
 'use strict';
 function buildSample(TT) {
   const m = TT.emptyModel();
-  m.meta = { school: '예시 재외한국학교', year: '2027학년도', term: '1학기' };
-  m.periods = [7, 7, 7, 7, 7]; m.morning = 4;
-  m.classCounts = [1, 1, 2, 1, 1, 2];
-  const S = (name, short, kind, g, extra) => Object.assign({ name, short, kind, g1: g[0], g2: g[1], g3: g[2], g4: g[3], g5: g[4], g6: g[5], consec: '허용', maxDay: '' }, extra || {});
+  m.meta = {"school":"예시 재외한국학교","year":"2027학년도","term":"1학기"};
+  m.periods = [7,7,7,7,7]; m.morning = 4;
+  m.classCounts = [1,1,1,1,1,1];
   m.subjects = [
-    S('국어', '국', '담임', [7, 7, 6, 6, 6, 6]),
-    S('수학', '수', '담임', [3, 4, 4, 4, 3, 3]),
-    S('사회', '사', '담임', [0, 0, 3, 2, 2, 2]),
-    S('과학', '과', '담임', [0, 0, 2, 3, 3, 3]),
-    S('도덕', '도', '담임', [0, 0, 1, 1, 1, 1]),
-    S('실과', '실', '담임', [0, 0, 0, 0, 1, 0]),
-    S('미술', '미', '담임', [0, 0, 1, 1, 1, 1]),
-    S('체육(담임)', '체', '담임', [0, 0, 0, 0, 0, 1]),
-    S('통합', '통', '담임', [6, 7, 0, 0, 0, 0]),
-    S('창체', '창', '담임', [2, 1, 0, 0, 0, 0]),
-    S('영어', '영', '분반', [8, 8, 8, 8, 8, 8], { consec: '금지', maxDay: 2 }),
-    S('중국어', '중', '분반', [5, 5, 5, 5, 5, 5], { maxDay: 1 }),
-    S('태권도', '체(태)', '전담', [2, 2, 2, 2, 2, 1], { maxDay: 1 }),
-    S('국악', '국악', '전담', [1, 0, 0, 1, 1, 1]),
-    S('음악(중등)', '음', '고정', [0, 0, 1, 0, 0, 0]),
-    S('정보(중등)', '정', '고정', [0, 0, 0, 0, 0, 1]),
-    S('동아리', '동', '고정', [1, 1, 2, 2, 2, 2])
+    {"name":"국어","short":"국","kind":"담임","g1":7,"g2":7,"g3":6,"g4":6,"g5":6,"g6":6,"consec":"허용","maxDay":""},
+    {"name":"수학","short":"수","kind":"담임","g1":3,"g2":4,"g3":4,"g4":4,"g5":3,"g6":3,"consec":"허용","maxDay":""},
+    {"name":"사회","short":"사","kind":"담임","g1":0,"g2":0,"g3":3,"g4":2,"g5":2,"g6":2,"consec":"허용","maxDay":""},
+    {"name":"과학","short":"과","kind":"담임","g1":0,"g2":0,"g3":2,"g4":3,"g5":3,"g6":3,"consec":"허용","maxDay":""},
+    {"name":"도덕","short":"도","kind":"담임","g1":0,"g2":0,"g3":1,"g4":1,"g5":1,"g6":1,"consec":"허용","maxDay":""},
+    {"name":"실과","short":"실","kind":"담임","g1":0,"g2":0,"g3":0,"g4":0,"g5":0,"g6":0,"consec":"허용","maxDay":""},
+    {"name":"미술","short":"미","kind":"담임","g1":0,"g2":0,"g3":1,"g4":1,"g5":1,"g6":1,"consec":"허용","maxDay":""},
+    {"name":"체육(담임)","short":"체","kind":"담임","g1":0,"g2":0,"g3":0,"g4":0,"g5":1,"g6":1,"consec":"허용","maxDay":""},
+    {"name":"통합","short":"통","kind":"담임","g1":6,"g2":6,"g3":0,"g4":0,"g5":0,"g6":0,"consec":"허용","maxDay":""},
+    {"name":"창체","short":"창","kind":"담임","g1":2,"g2":2,"g3":0,"g4":0,"g5":0,"g6":0,"consec":"허용","maxDay":""},
+    {"name":"영어","short":"영","kind":"분반","g1":8,"g2":8,"g3":8,"g4":8,"g5":8,"g6":8,"consec":"금지","maxDay":2},
+    {"name":"중국어","short":"중","kind":"분반","g1":5,"g2":5,"g3":5,"g4":5,"g5":5,"g6":5,"consec":"허용","maxDay":1},
+    {"name":"태권도","short":"체(태)","kind":"전담","g1":2,"g2":1,"g3":2,"g4":2,"g5":1,"g6":1,"consec":"허용","maxDay":1},
+    {"name":"음악(강사)","short":"국악","kind":"전담","g1":0,"g2":0,"g3":0,"g4":0,"g5":0,"g6":0,"consec":"허용","maxDay":""},
+    {"name":"음악(중등)","short":"음(중)","kind":"고정","g1":0,"g2":0,"g3":1,"g4":1,"g5":1,"g6":1,"consec":"허용","maxDay":""},
+    {"name":"정보(중등)","short":"정(중)","kind":"고정","g1":0,"g2":0,"g3":0,"g4":0,"g5":1,"g6":1,"consec":"허용","maxDay":""},
+    {"name":"동아리","short":"동","kind":"고정","g1":1,"g2":1,"g3":2,"g4":2,"g5":2,"g6":2,"consec":"허용","maxDay":""},
+    {"name":"미술(중등)","short":"미(중)","kind":"고정","g1":1,"g2":1,"g3":0,"g4":0,"g5":0,"g6":0,"consec":"허용","maxDay":""}
   ];
   m.groups = [
-    { subject: '영어', grade: 1, names: 'B,C' }, { subject: '영어', grade: 3, names: 'A,B,C' }, { subject: '영어', grade: 4, names: 'B,C' },
-    { subject: '영어', grade: 5, names: 'B,C' }, { subject: '영어', grade: 6, names: 'A,B,C' },
-    { subject: '중국어', grade: 1, names: 'A,B,C' }, { subject: '중국어', grade: 2, names: 'A,B' }, { subject: '중국어', grade: 3, names: 'A,B,C' },
-    { subject: '중국어', grade: 4, names: 'A,B,C' }, { subject: '중국어', grade: 5, names: 'A,B,C' }, { subject: '중국어', grade: 6, names: 'A,B,C' }
+    {"subject":"영어","grade":2,"names":"B,C"},
+    {"subject":"영어","grade":4,"names":"A,B,C"},
+    {"subject":"영어","grade":5,"names":"B,C"},
+    {"subject":"영어","grade":6,"names":"B,C"},
+    {"subject":"중국어","grade":1,"names":"A,B"},
+    {"subject":"중국어","grade":2,"names":"A,B"},
+    {"subject":"중국어","grade":3,"names":"A,B"},
+    {"subject":"중국어","grade":4,"names":"A,B"},
+    {"subject":"중국어","grade":5,"names":"A,B"},
+    {"subject":"중국어","grade":6,"names":"A,B"}
   ];
   m.ratio = [
-    { subject: '영어', group: 'A', k: 4, n: 4 }, { subject: '영어', group: 'B', k: 3, n: 5 },
-    { subject: '영어', group: 'C', k: 2, n: 6 }, { subject: '영어', group: '-', k: 3, n: 5 }
+    {"subject":"영어","group":"A","k":4,"n":4},
+    {"subject":"영어","group":"B","k":3,"n":5},
+    {"subject":"영어","group":"C","k":2,"n":6},
+    {"subject":"영어","group":"-","k":3,"n":5}
   ];
-  const T = (name, type, max, homeroom, subjects, blocked) => ({ name, type, max, homeroom: homeroom || '', subjects: subjects || '', avail: '', blocked: blocked || '' });
   m.teachers = [
-    T('한가람', '담임', 18, '1-1'), T('윤보라', '담임', 19, '2-1'), T('서다온', '담임', 19, '3-1'), T('장누리', '담임', 19, '3-2', '', '금2'),
-    T('오세찬', '담임', 19, '4-1', '', '금2'), T('문해솔', '담임', 19, '5-1', '', '금2'), T('배은결', '담임', 19, '6-1'), T('임도윤', '담임', 19, '6-2'),
-    T('중등음악', '중등교사', 2), T('중등정보', '중등교사', 2),
-    T('남궁준', '강사', 20, '', '중국어', '금2'), T('리밍', '강사', 20, '', '중국어'), T('장웨이', '강사', 20, '', '중국어'),
-    T('천징', '강사', 19, '', '중국어'), T('자오린', '강사', 16, '', '중국어'),
-    T('태권도', '강사', 14, '', '태권도'), T('국악', '강사', 5, '', '국악'),
-    T('신유나', '교과전담', 19, '', '영어', '금2'), T('권소율', '교과전담', 19, '', '영어'), T('정하린', '강사', 6, '', '영어'),
-    T('Ben', '원어민', 21, '', '영어'), T('Amy', '원어민', 21, '', '영어'), T('Chris', '원어민', 21, '', '영어')
+    {"name":"한가람","type":"담임","max":18,"homeroom":"1-1","subjects":"국어, 수학, 통합, 창체","avail":"","blocked":""},
+    {"name":"윤보라","type":"담임","max":19,"homeroom":"2-1","subjects":"국어, 수학, 통합, 창체","avail":"","blocked":""},
+    {"name":"서다온","type":"담임","max":19,"homeroom":"3-1","subjects":"국어, 수학, 사회, 과학, 도덕, 미술","avail":"","blocked":""},
+    {"name":"오세찬","type":"담임","max":19,"homeroom":"4-1","subjects":"국어, 수학, 사회, 과학, 도덕, 미술","avail":"","blocked":"금2"},
+    {"name":"문해솔","type":"담임","max":19,"homeroom":"5-1","subjects":"국어, 수학, 사회, 과학, 도덕, 미술","avail":"","blocked":"금2"},
+    {"name":"배은결","type":"담임","max":19,"homeroom":"6-1","subjects":"국어, 수학, 사회, 과학, 도덕, 미술","avail":"","blocked":""},
+    {"name":"중등음악","type":"중등교사","max":4,"homeroom":"","subjects":"음악(중등)","avail":"","blocked":""},
+    {"name":"중등정보","type":"중등교사","max":2,"homeroom":"","subjects":"정보(중등)","avail":"","blocked":""},
+    {"name":"중등미술","type":"중등교사","max":2,"homeroom":"","subjects":"미술(중등)","avail":"","blocked":""},
+    {"name":"태권도","type":"강사","max":12,"homeroom":"","subjects":"태권도","avail":"","blocked":""},
+    {"name":"신유나","type":"교과전담","max":19,"homeroom":"","subjects":"영어","avail":"","blocked":"금2"},
+    {"name":"권소율","type":"교과전담","max":19,"homeroom":"","subjects":"영어","avail":"","blocked":""},
+    {"name":"Ben","type":"원어민","max":21,"homeroom":"","subjects":"영어","avail":"","blocked":""},
+    {"name":"Amy","type":"원어민","max":21,"homeroom":"","subjects":"영어","avail":"","blocked":""},
+    {"name":"Chris","type":"원어민","max":21,"homeroom":"","subjects":"영어","avail":"","blocked":""},
+    {"name":"장웨이","type":"원어민","max":20,"homeroom":"","subjects":"중국어","avail":"","blocked":""},
+    {"name":"천징","type":"원어민","max":20,"homeroom":"","subjects":"중국어","avail":"","blocked":""},
+    {"name":"리밍","type":"원어민","max":20,"homeroom":"","subjects":"중국어","avail":"","blocked":""}
   ];
-  m.specialAssign = [];
+  m.specialAssign = [
+
+  ];
   m.fixed = [
-    { type: '동아리', target: '1,2', day: '화', period: '6', subject: '동아리', teachers: '남궁준,천징', note: '1~2학년 동아리' },
-    { type: '동아리', target: '3,4,5,6', day: '목', period: '6-7', subject: '동아리', teachers: '담임,남궁준,천징', note: '3~6학년 동아리 (3~6학년 담임 교사 시수에 포함)' },
-    { type: '수업', target: '3-1', day: '월', period: '6', subject: '음악(중등)', teachers: '중등음악', note: '중등 교사' },
-    { type: '수업', target: '3-2', day: '화', period: '3', subject: '음악(중등)', teachers: '중등음악', note: '중등 교사' },
-    { type: '수업', target: '6-2', day: '수', period: '5', subject: '정보(중등)', teachers: '중등정보', note: '중등 교사' },
-    { type: '수업', target: '6-1', day: '수', period: '6', subject: '정보(중등)', teachers: '중등정보', note: '중등 교사' }
+    {"type":"동아리","target":"1,2","day":"화","period":"6","subject":"동아리","teachers":"Chris,Amy,Ben","note":"1~2학년 동아리"},
+    {"type":"동아리","target":"3,4,5,6","day":"목","period":"6-7","subject":"동아리","teachers":"담임,Chris,Amy,Ben,권소율,신유나","note":"3~6학년 동아리 (3~6학년 담임 교사 시수에 포함)"},
+    {"type":"수업","target":"3-1","day":"월","period":"6","subject":"음악(중등)","teachers":"중등음악","note":""},
+    {"type":"수업","target":"4-1","day":"월","period":"7","subject":"음악(중등)","teachers":"중등음악","note":""},
+    {"type":"수업","target":"5-1","day":"화","period":"6","subject":"음악(중등)","teachers":"중등음악","note":""},
+    {"type":"수업","target":"6-1","day":"화","period":"7","subject":"음악(중등)","teachers":"중등음악","note":""},
+    {"type":"수업","target":"1-1","day":"수","period":"2","subject":"미술(중등)","teachers":"중등미술","note":""},
+    {"type":"수업","target":"2-1","day":"수","period":"3","subject":"미술(중등)","teachers":"중등미술","note":""},
+    {"type":"수업","target":"5-1","day":"화","period":"3","subject":"정보(중등)","teachers":"중등정보","note":""},
+    {"type":"수업","target":"6-1","day":"화","period":"2","subject":"정보(중등)","teachers":"중등정보","note":""}
+  ];
+  m.combos = [
+
+  ];
+  // 분반 교사 배정: 수동으로 정한 줄(없음)만 두고 나머지는 자동 계산
+  m.splitAssign = [
+
   ];
   m.splitAssign = TT.suggestAssign(m);
   return m;

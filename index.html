@@ -210,6 +210,10 @@ td.x { white-space: nowrap; } td.x .cp { margin-right: 4px; font-size: 12px; pad
 .combo label.cb select { font-size: 14px; }
 .combo { flex-wrap: nowrap; min-width: 340px; }
 
+/* 링크를 버튼 모양으로 (문의하기) */
+a.btn { text-decoration: none; color: inherit; display: inline-flex; align-items: center; }
+a.btn.primary { color: var(--accent-ink); }
+
 </style>
 </head>
 <body>
@@ -1728,6 +1732,8 @@ if (typeof module !== 'undefined' && module.exports) module.exports = buildSampl
 const TT = window.TT, TTX = window.TTX;
 const DAYS = TT.DAYS;
 const LS_KEY = 'tt-model-v1';
+// 위쪽 [문의하기] 버튼이 여는 구글 설문지 (응답은 만든 사람에게만 보임)
+const FEEDBACK_URL = 'https://forms.gle/V8ryqEgVguVpdFN57';
 const $ = (s, r) => (r || document).querySelector(s);
 
 function h(tag, props) {
@@ -2503,7 +2509,8 @@ function init() {
   lastSnap = snap();
   const hb = $('#hist'); if (hb) hb.append(
     h('button', { type: 'button', id: 'btn-undo', class: 'btn sm', onclick: undo, 'aria-label': '되돌리기' }, '↶ 되돌리기'),
-    h('button', { type: 'button', id: 'btn-redo', class: 'btn sm', onclick: redo, 'aria-label': '다시 실행' }, '↷ 다시 실행'));
+    h('button', { type: 'button', id: 'btn-redo', class: 'btn sm', onclick: redo, 'aria-label': '다시 실행' }, '↷ 다시 실행'),
+    h('a', { class: 'btn sm primary', href: FEEDBACK_URL, target: '_blank', rel: 'noopener', title: '궁금한 점·오류·바라는 기능을 남겨 주세요 (새 창에서 열려요)' }, '✉ 문의하기'));
   document.addEventListener('keydown', e => {
     if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
     const t = e.target; if (t && (t.tagName === 'TEXTAREA' || (t.tagName === 'INPUT' && !['checkbox', 'radio', 'button'].includes(t.type)))) return;
